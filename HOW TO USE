@@ -1,0 +1,10 @@
+NOTE: Changing the script can go poorly and I am not responsible
+
+To Use:
+(1) In the auto tab, there is a button in the right hand corner that says AutoBet, change that to custom and delete everything. Then, paste this in there.
+(2) The setable values are shown below
+  var baseBet = 100; //The base bet which is what will be bet by
+  var maxBet = 200; //The max bet before it resets to baseBet
+  var cashOut = 2; //The auto casout area
+  var onLossIncreaseQty = 2; //If you lose, it will increase the bet this amount of times i.e. 2x
+  var maxLoseTrain = 2; // If it goes below the cashout this many times, it stops betting until it makes it above 
