@@ -28,7 +28,7 @@ engine.on('game_starting', function() {
 });
 
 engine.on('game_crash', function(data) {
-    if (data.game_crash / 100 >= 2) {
+    if (data.game_crash / 100 >= cashOut) {
         loseTrain = [];
         window.bet = true;
         console.log('Last was win, resetting settings');
