@@ -3,7 +3,7 @@ var maxBet = 200;
 var cashOut = 2;
 var onLossIncreaseQty = 2;
 var maxLoseTrain = 2;
-// YOU CAN SCREW THIS UP IF YOU TOUCH BELOW. IF YOU DO, I AM NOT RESPONSIBLE
+// YOU CAN SCREW THIS UP IF YOU TOUCH BELOW. I AM NOT RESPONSIBLE FOR DAMAGES
 var currentBet = baseBet;
 window.bet = true;
 var loseTrain = [];
