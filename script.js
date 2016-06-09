@@ -3,7 +3,7 @@ var maxBet = 200;
 var cashOut = 2;
 var onLossIncreaseQty = 2;
 var maxLoseTrain = 2;
-// YOU CAN SCREW THIS UP IF YOU TOUCH BELOW. I AM NOT RESPONSIBLE FOR DAMAGES
+// YOU CAN SCREW THIS UP IF YOU TOUCH BELOW. IF YOU DO, I AM NOT RESPONSIBLE
 var currentBet = baseBet;
 window.bet = true;
 var loseTrain = [];
@@ -39,7 +39,6 @@ if (automate === true) {
 }
 
 engine.on('game_starting', function() {
-  console.log(onLossIncreaseQty);
         var lastGamePlay = engine.lastGamePlay();
 
         if (lastGamePlay == 'LOST') {
@@ -59,7 +58,11 @@ engine.on('game_starting', function() {
 });
 
 engine.on('game_crash', function(data) {
+  if (data.game_crash / 100 <= 5) {
     crashData.push(data.game_crash);
+  } else {
+    activateOnePOne();
+  }
     analyzeData(crashData);
     if (data.game_crash / 100 >= cashOut) {
         loseTrain = [];
