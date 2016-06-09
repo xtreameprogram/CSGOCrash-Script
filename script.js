@@ -103,7 +103,7 @@ function analyzeData(crashData) {
   else {
     activateOnePOne();
   }
-  if (balance - baseBet*3 < balance - baseBet*7 && !recovering) {
+  if (balance - baseBet*3 < balance - baseBet*3 && !recovering) {
     activateOnePOne();
     recovering = true;
   }
