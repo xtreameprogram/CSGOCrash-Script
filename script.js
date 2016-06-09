@@ -99,7 +99,7 @@ function analyzeData(crashData) {
   else {
     activateOnePOne();
   }
-  if (balance - baseBet*3 <= balance) {
+  if (balance - baseBet*5 <= balance) {
     activateOnePOne();
   }
 
