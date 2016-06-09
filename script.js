@@ -38,6 +38,17 @@ if (automate === true) {
   }
 }
 
+engine.on('msg', function (data) {
+  if (data.message.indexOf("!average")>-1) {
+    var sum = 0;
+    for( var i = 0; i < crashData.length; i++ ){
+        sum += parseInt( crashData[i], 10 );
+    }
+    var avg = (sum/crashData.length)/100;
+    engine.chat("The average is: ", avg);
+  }
+});
+
 engine.on('game_starting', function() {
         var lastGamePlay = engine.lastGamePlay();
 
