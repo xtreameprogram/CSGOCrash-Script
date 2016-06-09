@@ -18,7 +18,7 @@ engine.on('game_starting', function() {
             currentBet = baseBet;
         }
 
-        if (currentBet > maxBet) {
+        if (currentBet > maxBet && maxBet !== -1) {
             currentBet = baseBet;
         }
         if (window.bet) {
