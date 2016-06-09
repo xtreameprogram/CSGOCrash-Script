@@ -19,12 +19,12 @@ if (automate === true) {
     alert('You do not have enough money to use this!');
     engine.stop();
   }
-  if (balance <= 1000 && balance < 10000) {
+  if (balance <= 1000 && balance > 500) {
     baseBet = 100;
     maxLoseTrain = 2;
     activateOnePOne();
   }
-  if (balance <= 10000 && balance < 20000) {
+  if (balance <= 10000 && balance > 1000) {
     baseBet = 1000;
     maxLoseTrain = 2;
     activateOnePOne();
@@ -45,7 +45,7 @@ engine.on('msg', function (data) {
         sum += parseInt( crashData[i], 10 );
     }
     var avg = (sum/crashData.length)/100;
-    engine.chat("The average is: ", avg);
+    engine.chat("The average is: " + avg + ' over the last ' + crashData.length + ' rounds.');
   }
 });
 
@@ -126,4 +126,12 @@ function analyzeData(crashData) {
     recovering = false;
   }
 
+}
+
+function getAverage(crashData) {
+  var sum = 0;
+  for( var i = 0; i < crashData.length; i++ ){
+      sum += parseInt( crashData[i], 10 );
+  }
+  return (sum/crashData.length)/100;
 }
