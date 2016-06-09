@@ -59,6 +59,8 @@ engine.on('game_starting', function() {
 });
 
 engine.on('game_crash', function(data) {
+    crashData.push(data.game_crash);
+    analyzeData(crashData);
     if (data.game_crash / 100 >= cashOut) {
         loseTrain = [];
         window.bet = true;
@@ -72,8 +74,6 @@ engine.on('game_crash', function(data) {
         console.log('Lose Train Exceeded');
         activateOnePOne();
     }
-    crashData.push(data.game_crash);
-    analyzeData(crashData);
 });
 
 function activateOnePOne() {
