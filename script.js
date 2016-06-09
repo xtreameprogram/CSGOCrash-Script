@@ -8,12 +8,13 @@ var currentBet = baseBet;
 window.bet = true;
 var loseTrain = [];
 var crashData = [];
+var recovering = false;
 
 var balance = engine.getBalance();
 
 var automate = confirm("Do you want this script to calculate everything for you?");
 
-if (automate == true) {
+if (automate === true) {
   if (balance <= 500) {
     alert('You do not have enough money to use this!');
     engine.stop();
@@ -31,12 +32,14 @@ if (automate == true) {
   if (balance >= 20000) {
     baseBet = 1000;
     maxBet = 2000;
+    var mainMaxBet = 2000;
     maxLoseTrain =  parseInt(window.prompt("How many times in a row should you lose before cutting off betting","2"));
     activateMartingale();
   }
 }
 
 engine.on('game_starting', function() {
+  console.log(onLossIncreaseQty);
         var lastGamePlay = engine.lastGamePlay();
 
         if (lastGamePlay == 'LOST') {
@@ -81,6 +84,7 @@ function activateOnePOne() {
 }
 
 function activateMartingale() {
+  maxBet = mainMaxBet;
   cashOut = 2;
   onLossIncreaseQty = 2;
   console.log("Activated martingale");
@@ -93,14 +97,19 @@ function analyzeData(crashData) {
   }
   var avg = (sum/crashData.length)/100;
   console.log("Crash Average is: ", avg);
-  if (avg > 2.5 && automate) {
+  if (avg > 2 && automate) {
     activateMartingale();
   }
   else {
     activateOnePOne();
   }
-  if (balance - baseBet*5 <= balance) {
+  if (balance - baseBet*3 < balance - baseBet*7 && !recovering) {
     activateOnePOne();
+    recovering = true;
+  }
+
+  if (balance === engine.getBalance()) {
+    recovering = false;
   }
 
 }
