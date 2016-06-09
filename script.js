@@ -7,6 +7,34 @@ var maxLoseTrain = 2;
 var currentBet = baseBet;
 window.bet = true;
 var loseTrain = [];
+var crashData = [];
+
+var balance = engine.getBalance();
+
+var automate = confirm("Do you want this script to calculate everything for you?");
+
+if (automate == true) {
+  if (balance <= 500) {
+    alert('You do not have enough money to use this!');
+    engine.stop();
+  }
+  if (balance <= 1000 && balance < 10000) {
+    baseBet = 100;
+    maxLoseTrain = 2;
+    activateOnePOne();
+  }
+  if (balance <= 10000 && balance < 20000) {
+    baseBet = 1000;
+    maxLoseTrain = 2;
+    activateOnePOne();
+  }
+  if (balance >= 20000) {
+    baseBet = 1000;
+    maxBet = 2000;
+    maxLoseTrain =  parseInt(window.prompt("How many times in a row should you lose before cutting off betting","2"));
+    activateMartingale();
+  }
+}
 
 engine.on('game_starting', function() {
         var lastGamePlay = engine.lastGamePlay();
@@ -18,7 +46,7 @@ engine.on('game_starting', function() {
             currentBet = baseBet;
         }
 
-        if (currentBet > maxBet && maxBet !== -1) {
+        if (currentBet > maxBet) {
             currentBet = baseBet;
         }
         if (window.bet) {
@@ -39,5 +67,40 @@ engine.on('game_crash', function(data) {
     if (loseTrain.length > maxLoseTrain - 1) {
         window.bet = false;
         console.log('Lose Train Exceeded');
+        activateOnePOne();
     }
+    crashData.push(data.game_crash);
+    analyzeData(crashData);
 });
+
+function activateOnePOne() {
+  console.log("Activated 1.1");
+  maxBet = -1;
+  cashOut = 1.1;
+  onLossIncreaseQty = 10;
+}
+
+function activateMartingale() {
+  cashOut = 2;
+  onLossIncreaseQty = 2;
+  console.log("Activated martingale");
+}
+
+function analyzeData(crashData) {
+  var sum = 0;
+  for( var i = 0; i < crashData.length; i++ ){
+      sum += parseInt( crashData[i], 10 );
+  }
+  var avg = (sum/crashData.length)/100;
+  console.log("Crash Average is: ", avg);
+  if (avg > 2.5 && automate) {
+    activateMartingale();
+  }
+  else {
+    activateOnePOne();
+  }
+  if (balance - baseBet*3 <= balance) {
+    activateOnePOne();
+  }
+
+}
