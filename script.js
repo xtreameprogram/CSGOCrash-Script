@@ -108,7 +108,7 @@ function analyzeData(crashData) {
     recovering = true;
   }
 
-  if (balance === engine.getBalance()) {
+  if (balance <= engine.getBalance()) {
     recovering = false;
   }
 
